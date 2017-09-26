@@ -5,7 +5,7 @@ import scipy.io as sio
 import numpy as np
 
 
-def load_neural_data(path):
+def load_neural_data(path, sampling_freq=30.0):
     data = sio.loadmat(path)['NEV']
     data = data[0]
     data = data['Data']
@@ -19,7 +19,10 @@ def load_neural_data(path):
     # Trigger data
     trigger = np.array(data[0][0][0][0][0][0][2][0])
 
-    return NeuralData(timestamp, electrode, unit, trigger)
+    # Get spike milliseconds from timestamp
+    spikes = timestamp / sampling_freq
+
+    return NeuralData(spikes, electrode, unit, trigger)
 
 
 def divide_by_electrode(neural_data):
@@ -34,15 +37,15 @@ def divide_by_electrode(neural_data):
 
 
 class NeuralData(object):
-    def __init__(self, timestamp, electrode, unit, trigger):
-        self.__timestamp = timestamp
+    def __init__(self, spikes, electrode, unit, trigger):
+        self.__spikes = spikes
         self.__electrode = electrode
         self.__unit = unit
         self.__trigger = trigger
 
     @property
-    def timestamp(self):
-        return self.__timestamp
+    def spikes(self):
+        return self.__spikes
 
     @property
     def electrode(self):
@@ -56,9 +59,9 @@ class NeuralData(object):
     def trigger(self):
         return self.__trigger
 
-    @timestamp.setter
-    def timestamp(self, timestamp):
-        self.__timestamp = timestamp
+    @spikes.setter
+    def timestamp(self, spikes):
+        self.__spikes = spikes
 
     @electrode.setter
     def electrode(self, electrode):
