@@ -2,8 +2,7 @@
 """Helper utilities for io."""
 
 import cv2
-from os import listdir
-from os.path import isfile, join
+import os
 
 
 def build_video(_output_folder, _output_video_ext, _file_pattern, _file_ext, _fps):
@@ -11,7 +10,7 @@ def build_video(_output_folder, _output_video_ext, _file_pattern, _file_ext, _fp
     Function to build the output video with the processed frames.
     """
     _codec_fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    _image_list = [f for f in listdir(_output_folder) if isfile(join(_output_folder, f))
+    _image_list = [f for f in os.listdir(_output_folder) if os.path.isfile(os.path.join(_output_folder, f))
                    and f.find(_file_pattern) >= 0 and f.find(_file_ext) > 0]
     _image_list.sort()
 
@@ -26,3 +25,18 @@ def build_video(_output_folder, _output_video_ext, _file_pattern, _file_ext, _fp
         _writer.write(_frame)
 
     _writer.release()
+
+
+def remove_files(path, file_ext):
+    """
+    Remove files from directory matching a file extension.
+    """
+    [os.remove(os.path.join(path, f)) for f in os.listdir(path) if f.endswith(file_ext)]
+
+
+def create_folder(path):
+    """
+    Function to create folder if not exists.
+    """
+    if not os.path.exists(path):
+        os.makedirs(path)
