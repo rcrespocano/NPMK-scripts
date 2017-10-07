@@ -3,6 +3,7 @@
 
 import scipy.io as sio
 import numpy as np
+import pandas as pd
 
 
 def load_neural_data(path, sampling_freq=30.0):
@@ -29,9 +30,20 @@ def divide_by_electrode(neural_data):
     data = {}
 
     electrodes = np.unique(neural_data.electrode)
-    for idx, electrode in enumerate(electrodes):
+    for electrode in electrodes:
         indexes = np.where(neural_data.electrode == electrode)
         data[electrode] = neural_data.timestamp[indexes]
+
+    return data
+
+
+def divide_by_electrode_and_unit(neural_data):
+    data = {}
+    df = pd.DataFrame({'s': neural_data.spikes, 'e': neural_data.electrode, 'u': neural_data.unit})
+    grouped_data = df.groupby(['e', 'u'])['s']
+
+    for key, value in grouped_data:
+        data[key] = np.array(value)
 
     return data
 

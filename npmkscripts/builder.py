@@ -3,27 +3,27 @@
 
 import numpy as np
 import os
-import datetime
 import cv2
 import matplotlib.pyplot as plt
-from .nevdata import load_neural_data, divide_by_electrode
+from .nevdata import load_neural_data, divide_by_electrode_and_unit
 from .mea import get_soft_index_from_mea_index
 from .io import build_video, remove_files
 
 __all__ = ['plot_spike_raster', 'generate_video']
 
 
-def plot_spike_raster(dataset_path):
+def plot_spike_raster(dataset_path, electrodes=None):
     # Load data
     neural_data = load_neural_data(dataset_path)
-    data = divide_by_electrode(neural_data)
+    data = divide_by_electrode_and_unit(neural_data)
 
     # Plot each electrode spike raster
     for idx, (key, value) in enumerate(data.items()):
-        x = value
-        y = np.ones(x.size) * (idx + 1)
-        plt.scatter(x, y, s=4, c='b', lw=0)
-        plt.text(-1, idx+1, key)
+        if electrodes is None or key[0] in electrodes:
+            x = value
+            y = np.ones(x.size) * (idx + 1)
+            plt.scatter(x, y, s=1, lw=0)
+            plt.text(-1, idx + 1, key)
 
     plt.title(os.path.basename(dataset_path))
     plt.xlabel('Time (ms)')
@@ -31,17 +31,18 @@ def plot_spike_raster(dataset_path):
     plt.show()
 
 
-def generate_spike_raster(dataset_path, output_path):
+def generate_spike_raster(dataset_path, output_path, electrodes=None):
     # Load data
     neural_data = load_neural_data(dataset_path)
-    data = divide_by_electrode(neural_data)
+    data = divide_by_electrode_and_unit(neural_data)
 
     # Plot each electrode spike raster
     for idx, (key, value) in enumerate(data.items()):
-        x = value
-        y = np.ones(x.size) * (idx + 1)
-        plt.scatter(x, y, s=4, c='b', lw=0)
-        plt.text(-1, idx + 1, key)
+        if electrodes is None or key[0] in electrodes:
+            x = value
+            y = np.ones(x.size) * (idx + 1)
+            plt.scatter(x, y, s=1, lw=0)
+            plt.text(-1, idx + 1, key)
 
     plt.title(os.path.basename(dataset_path))
     plt.xlabel('Time (ms)')
