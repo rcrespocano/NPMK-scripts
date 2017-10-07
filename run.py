@@ -60,6 +60,7 @@ if __name__ == '__main__':
 
     builder.generate_spike_raster(dataset_path + file, output_path)
     builder.generate_video(dataset_path + file, output_path)
+    builder.save_spike_raster(dataset_path + file, output_path=output_path+'data-spikes.csv')
 
     print('Experiment 6.')
     file = 'fixational_sorteado.mat'
@@ -67,3 +68,4 @@ if __name__ == '__main__':
 
     builder.generate_spike_raster(dataset_path + file, output_path)
     builder.generate_video(dataset_path + file, output_path)
+    builder.save_spike_raster(dataset_path + file, output_path=output_path + 'data-spikes.csv')

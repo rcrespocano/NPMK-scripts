@@ -48,6 +48,12 @@ def divide_by_electrode_and_unit(neural_data):
     return data
 
 
+def build_df(neural_data):
+    return pd.DataFrame({'Spikes': neural_data.spikes,
+                         'Electrode': neural_data.electrode,
+                         'Unit': neural_data.unit})
+
+
 class NeuralData(object):
     def __init__(self, spikes, electrode, unit, trigger):
         self.__spikes = spikes

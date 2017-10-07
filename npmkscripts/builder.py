@@ -5,7 +5,7 @@ import numpy as np
 import os
 import cv2
 import matplotlib.pyplot as plt
-from .nevdata import load_neural_data, divide_by_electrode_and_unit
+from .nevdata import load_neural_data, divide_by_electrode_and_unit, build_df
 from .mea import get_soft_index_from_mea_index
 from .io import build_video, remove_files
 
@@ -49,6 +49,13 @@ def generate_spike_raster(dataset_path, output_path, electrodes=None):
     plt.ylabel('Electrode')
     plt.savefig(output_path + 'raster.pdf')
     plt.clf()
+
+
+def save_spike_raster(dataset_path, output_path):
+    # Load data
+    neural_data = load_neural_data(dataset_path)
+    data = build_df(neural_data)
+    data.to_csv(output_path, index=False)
 
 
 def generate_video(dataset_path, output_path, fps=60, step_ms=17, mea_size=10, image_size=500):
