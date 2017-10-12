@@ -23,7 +23,7 @@ def plot_spike_raster(dataset_path, electrodes=None):
             x = value
             y = np.ones(x.size) * (idx + 1)
             plt.scatter(x, y, s=1, lw=0)
-            plt.text(-1, idx + 1, key)
+            plt.text(0, idx + 1, key, size=4)
 
     plt.title(get_name_from_dataset(dataset_path))
     plt.xlabel('Time (ms)')
@@ -42,7 +42,7 @@ def generate_spike_raster(dataset_path, output_path, electrodes=None):
             x = value
             y = np.ones(x.size) * (idx + 1)
             plt.scatter(x, y, s=1, lw=0)
-            plt.text(-1, idx + 1, key)
+            plt.text(0, idx + 1, key, size=4)
 
     plt.title(get_name_from_dataset(dataset_path))
     plt.xlabel('Time (ms)')
