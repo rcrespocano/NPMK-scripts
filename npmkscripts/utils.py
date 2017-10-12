@@ -3,6 +3,7 @@
 
 import sys
 import datetime
+import os
 
 
 def check_python_version():
@@ -12,3 +13,7 @@ def check_python_version():
 
 def get_datetime():
     return datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+
+
+def get_name_from_dataset(dataset_path):
+    return os.path.basename(dataset_path)

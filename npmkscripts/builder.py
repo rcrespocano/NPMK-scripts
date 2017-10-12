@@ -2,12 +2,12 @@
 """Main module for plotting and visualize operations."""
 
 import numpy as np
-import os
 import cv2
 import matplotlib.pyplot as plt
 from .nevdata import load_neural_data, divide_by_electrode_and_unit, build_df
 from .mea import get_soft_index_from_mea_index
 from .io import build_video, remove_files
+from .utils import get_name_from_dataset
 
 __all__ = ['plot_spike_raster', 'generate_video']
 
@@ -25,7 +25,7 @@ def plot_spike_raster(dataset_path, electrodes=None):
             plt.scatter(x, y, s=1, lw=0)
             plt.text(-1, idx + 1, key)
 
-    plt.title(os.path.basename(dataset_path))
+    plt.title(get_name_from_dataset(dataset_path))
     plt.xlabel('Time (ms)')
     plt.ylabel('Electrode')
     plt.show()
@@ -44,10 +44,10 @@ def generate_spike_raster(dataset_path, output_path, electrodes=None):
             plt.scatter(x, y, s=1, lw=0)
             plt.text(-1, idx + 1, key)
 
-    plt.title(os.path.basename(dataset_path))
+    plt.title(get_name_from_dataset(dataset_path))
     plt.xlabel('Time (ms)')
     plt.ylabel('Electrode')
-    plt.savefig(output_path + 'raster.pdf')
+    plt.savefig(output_path + 'raster-' + get_name_from_dataset(dataset_path) + '.pdf')
     plt.clf()
 
 
@@ -55,13 +55,13 @@ def save_spike_raster(dataset_path, output_path):
     # Load data
     neural_data = load_neural_data(dataset_path)
     data = build_df(neural_data)
-    data.to_csv(output_path, index=False)
+    data.to_csv(output_path + 'data-spikes-' + get_name_from_dataset(dataset_path) + '.csv', index=False)
 
 
 def generate_video(dataset_path, output_path, fps=60, step_ms=17, mea_size=10, image_size=500):
     # Output
     output_folder = output_path
-    output_file = 'reconstruction'
+    output_file = 'reconstruction-' + get_name_from_dataset(dataset_path)
     output_ext = '.png'
     output_video_ext = '.avi'
 

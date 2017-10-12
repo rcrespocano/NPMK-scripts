@@ -13,17 +13,27 @@ def load_neural_data(path, sampling_freq=30.0):
 
     # Spike data
     spike_data = data[0][0][0][1][0][0]
-    timestamp = np.array(spike_data[0][0])
+    spikes_timestamp = np.array(spike_data[0][0])
     electrode = np.array(spike_data[1][0])
     unit = np.array(spike_data[2][0])
 
     # Trigger data
-    trigger = np.array(data[0][0][0][0][0][0][2][0])
+    trigger_timestamp = np.array(data[0][0][0][0][0][0][1][0])
+    trigger_sec = np.array(data[0][0][0][0][0][0][2][0])
+    trigger_timestamp = trigger_timestamp[trigger_timestamp > 0.]
+    trigger_sec = trigger_sec[trigger_sec > 0.]
+
+    # Filter data: keep data between trigger timestamps
+    condition = np.logical_and(spikes_timestamp >= trigger_timestamp[0], spikes_timestamp <= trigger_timestamp[-1])
+    indexes = np.where(condition)
+    spikes_timestamp = spikes_timestamp[indexes]
+    electrode = electrode[indexes]
+    unit = unit[indexes]
 
     # Get spike milliseconds from timestamp
-    spikes = timestamp / sampling_freq
+    spikes = spikes_timestamp / sampling_freq
 
-    return NeuralData(spikes, electrode, unit, trigger)
+    return NeuralData(spikes, electrode, unit, trigger_sec)
 
 
 def divide_by_electrode(neural_data):

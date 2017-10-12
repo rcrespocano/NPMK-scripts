@@ -32,6 +32,7 @@ if __name__ == '__main__':
 
     builder.generate_spike_raster(dataset_path + file, output_path)
     builder.generate_video(dataset_path + file, output_path)
+    builder.save_spike_raster(dataset_path + file, output_path=output_path)
 
     print('Experiment 2.')
     file = 'barras_white_on_black1_sorteado.mat'
@@ -39,6 +40,7 @@ if __name__ == '__main__':
 
     builder.generate_spike_raster(dataset_path + file, output_path)
     builder.generate_video(dataset_path + file, output_path)
+    builder.save_spike_raster(dataset_path + file, output_path=output_path)
 
     print('Experiment 3.')
     file = 'barras_white_on_black2_sorteado.mat'
@@ -46,6 +48,7 @@ if __name__ == '__main__':
 
     builder.generate_spike_raster(dataset_path + file, output_path)
     builder.generate_video(dataset_path + file, output_path)
+    builder.save_spike_raster(dataset_path + file, output_path=output_path)
 
     print('Experiment 4.')
     file = 'barras_white_on_black_sorteado.mat'
@@ -53,6 +56,7 @@ if __name__ == '__main__':
 
     builder.generate_spike_raster(dataset_path + file, output_path)
     builder.generate_video(dataset_path + file, output_path)
+    builder.save_spike_raster(dataset_path + file, output_path=output_path)
 
     print('Experiment 5.')
     file = 'fixational1_sorteado.mat'
@@ -60,7 +64,7 @@ if __name__ == '__main__':
 
     builder.generate_spike_raster(dataset_path + file, output_path)
     builder.generate_video(dataset_path + file, output_path)
-    builder.save_spike_raster(dataset_path + file, output_path=output_path+'data-spikes.csv')
+    builder.save_spike_raster(dataset_path + file, output_path=output_path)
 
     print('Experiment 6.')
     file = 'fixational_sorteado.mat'
@@ -68,4 +72,4 @@ if __name__ == '__main__':
 
     builder.generate_spike_raster(dataset_path + file, output_path)
     builder.generate_video(dataset_path + file, output_path)
-    builder.save_spike_raster(dataset_path + file, output_path=output_path + 'data-spikes.csv')
+    builder.save_spike_raster(dataset_path + file, output_path=output_path)
