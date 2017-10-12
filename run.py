@@ -26,7 +26,7 @@ if __name__ == '__main__':
     # Plot data
     dataset_path = '/home/rcc/Recordings/20170918-umhcristinaexp/refixationaleyemovementsdatosexperimentales/mat-data/'
 
-    print('Experiment 1.')
+    print('> Experiment 1.')
     file = 'barras_black_on_white_sorted.mat'
     output_path = create_experiment_output_folder()
 
@@ -34,7 +34,7 @@ if __name__ == '__main__':
     builder.generate_video(dataset_path + file, output_path)
     builder.save_spike_raster(dataset_path + file, output_path=output_path)
 
-    print('Experiment 2.')
+    print('> Experiment 2.')
     file = 'barras_white_on_black1_sorteado.mat'
     output_path = create_experiment_output_folder()
 
@@ -42,7 +42,7 @@ if __name__ == '__main__':
     builder.generate_video(dataset_path + file, output_path)
     builder.save_spike_raster(dataset_path + file, output_path=output_path)
 
-    print('Experiment 3.')
+    print('> Experiment 3.')
     file = 'barras_white_on_black2_sorteado.mat'
     output_path = create_experiment_output_folder()
 
@@ -50,7 +50,7 @@ if __name__ == '__main__':
     builder.generate_video(dataset_path + file, output_path)
     builder.save_spike_raster(dataset_path + file, output_path=output_path)
 
-    print('Experiment 4.')
+    print('> Experiment 4.')
     file = 'barras_white_on_black_sorteado.mat'
     output_path = create_experiment_output_folder()
 
@@ -58,7 +58,7 @@ if __name__ == '__main__':
     builder.generate_video(dataset_path + file, output_path)
     builder.save_spike_raster(dataset_path + file, output_path=output_path)
 
-    print('Experiment 5.')
+    print('> Experiment 5.')
     file = 'fixational1_sorteado.mat'
     output_path = create_experiment_output_folder()
 
@@ -66,7 +66,7 @@ if __name__ == '__main__':
     builder.generate_video(dataset_path + file, output_path)
     builder.save_spike_raster(dataset_path + file, output_path=output_path)
 
-    print('Experiment 6.')
+    print('> Experiment 6.')
     file = 'fixational_sorteado.mat'
     output_path = create_experiment_output_folder()
 

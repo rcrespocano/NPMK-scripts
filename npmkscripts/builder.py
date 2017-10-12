@@ -13,6 +13,8 @@ __all__ = ['plot_spike_raster', 'generate_video']
 
 
 def plot_spike_raster(dataset_path, electrodes=None):
+    print('plot_spike_raster')
+
     # Load data
     neural_data = load_neural_data(dataset_path)
     data = divide_by_electrode_and_unit(neural_data)
@@ -32,6 +34,8 @@ def plot_spike_raster(dataset_path, electrodes=None):
 
 
 def generate_spike_raster(dataset_path, output_path, electrodes=None):
+    print('generate_spike_raster')
+
     # Load data
     neural_data = load_neural_data(dataset_path)
     data = divide_by_electrode_and_unit(neural_data)
@@ -52,6 +56,8 @@ def generate_spike_raster(dataset_path, output_path, electrodes=None):
 
 
 def save_spike_raster(dataset_path, output_path):
+    print('save_spike_raster')
+
     # Load data
     neural_data = load_neural_data(dataset_path)
     data = build_df(neural_data)
@@ -59,6 +65,8 @@ def save_spike_raster(dataset_path, output_path):
 
 
 def generate_video(dataset_path, output_path, fps=60, step_ms=17, mea_size=10, image_size=500):
+    print('generate_video')
+
     # Output
     output_folder = output_path
     output_file = 'reconstruction-' + get_name_from_dataset(dataset_path)
@@ -73,7 +81,6 @@ def generate_video(dataset_path, output_path, fps=60, step_ms=17, mea_size=10, i
     # Load data
     neural_data = load_neural_data(dataset_path)
 
-    print('Loop...')
     while time_counter < neural_data.spikes[-1]:
         indexes = np.where(np.logical_and(neural_data.spikes >= time_counter,
                                           neural_data.spikes < time_counter + step_ms))
@@ -94,9 +101,7 @@ def generate_video(dataset_path, output_path, fps=60, step_ms=17, mea_size=10, i
         time_counter += step_ms
 
     # Video file
-    print('Build video file...')
     build_video(output_folder, output_video_ext, output_file, output_ext, fps)
 
     # Remove temporal images
-    print('Remove temporal files...')
     remove_files(path=output_folder, file_ext=output_ext)
