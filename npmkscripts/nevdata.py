@@ -30,6 +30,9 @@ def load_neural_data(path, sampling_freq=30.0):
     electrode = electrode[indexes]
     unit = unit[indexes]
 
+    # Move data to t=0
+    spikes_timestamp = spikes_timestamp - spikes_timestamp[0]
+
     # Get spike milliseconds from timestamp
     spikes = spikes_timestamp / sampling_freq
 
