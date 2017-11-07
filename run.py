@@ -31,32 +31,40 @@ if __name__ == '__main__':
     output_path = create_experiment_output_folder()
 
     builder.generate_spike_raster(dataset_path + file, output_path)
+    builder.generate_accumulated_spike_raster_bars(dataset_path + file, output_path)
     builder.generate_video(dataset_path + file, output_path)
     builder.save_spike_raster(dataset_path + file, output_path=output_path)
+    builder.save_trigger(dataset_path + file, output_path=output_path)
 
     print('> Experiment 2.')
     file = 'barras_white_on_black1_sorteado.mat'
     output_path = create_experiment_output_folder()
 
     builder.generate_spike_raster(dataset_path + file, output_path)
+    builder.generate_accumulated_spike_raster_bars(dataset_path + file, output_path)
     builder.generate_video(dataset_path + file, output_path)
     builder.save_spike_raster(dataset_path + file, output_path=output_path)
+    builder.save_trigger(dataset_path + file, output_path=output_path)
 
     print('> Experiment 3.')
     file = 'barras_white_on_black2_sorteado.mat'
     output_path = create_experiment_output_folder()
 
     builder.generate_spike_raster(dataset_path + file, output_path)
+    builder.generate_accumulated_spike_raster_bars(dataset_path + file, output_path)
     builder.generate_video(dataset_path + file, output_path)
     builder.save_spike_raster(dataset_path + file, output_path=output_path)
+    builder.save_trigger(dataset_path + file, output_path=output_path)
 
     print('> Experiment 4.')
     file = 'barras_white_on_black_sorteado.mat'
     output_path = create_experiment_output_folder()
 
     builder.generate_spike_raster(dataset_path + file, output_path)
+    builder.generate_accumulated_spike_raster_bars(dataset_path + file, output_path)
     builder.generate_video(dataset_path + file, output_path)
     builder.save_spike_raster(dataset_path + file, output_path=output_path)
+    builder.save_trigger(dataset_path + file, output_path=output_path)
 
     print('> Experiment 5.')
     file = 'fixational1_sorteado.mat'
@@ -65,6 +73,7 @@ if __name__ == '__main__':
     builder.generate_spike_raster(dataset_path + file, output_path)
     builder.generate_video(dataset_path + file, output_path)
     builder.save_spike_raster(dataset_path + file, output_path=output_path)
+    builder.save_trigger(dataset_path + file, output_path=output_path)
 
     print('> Experiment 6.')
     file = 'fixational_sorteado.mat'
@@ -73,3 +82,4 @@ if __name__ == '__main__':
     builder.generate_spike_raster(dataset_path + file, output_path)
     builder.generate_video(dataset_path + file, output_path)
     builder.save_spike_raster(dataset_path + file, output_path=output_path)
+    builder.save_trigger(dataset_path + file, output_path=output_path)

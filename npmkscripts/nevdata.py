@@ -22,16 +22,24 @@ def load_neural_data(path, sampling_freq=30.0):
     trigger_sec = np.array(data[0][0][0][0][0][0][2][0])
     trigger_timestamp = trigger_timestamp[trigger_timestamp > 0.]
     trigger_sec = trigger_sec[trigger_sec > 0.]
+    trigger_timestamp_avg = np.mean(np.diff(trigger_timestamp))
 
     # Filter data: keep data between trigger timestamps
-    condition = np.logical_and(spikes_timestamp >= trigger_timestamp[0], spikes_timestamp <= trigger_timestamp[-1])
+    condition = np.logical_and(spikes_timestamp >= trigger_timestamp[0],
+                               spikes_timestamp <= trigger_timestamp[-1] + trigger_timestamp_avg)
     indexes = np.where(condition)
     spikes_timestamp = spikes_timestamp[indexes]
     electrode = electrode[indexes]
     unit = unit[indexes]
 
     # Move data to t=0
-    spikes_timestamp = spikes_timestamp - spikes_timestamp[0]
+    spikes_timestamp -= trigger_timestamp[0]
+
+    # Trigger data in milliseconds
+    trigger_sec *= 1000.0
+
+    # Mover trigger data to t=0
+    trigger_sec -= trigger_sec[0]
 
     # Get spike milliseconds from timestamp
     spikes = spikes_timestamp / sampling_freq
@@ -65,6 +73,10 @@ def build_df(neural_data):
     return pd.DataFrame({'Spikes': neural_data.spikes,
                          'Electrode': neural_data.electrode,
                          'Unit': neural_data.unit})
+
+
+def build_trigger_df(neural_data):
+    return pd.DataFrame({'Trigger': neural_data.trigger})
 
 
 class NeuralData(object):

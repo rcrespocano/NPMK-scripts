@@ -4,7 +4,7 @@
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
-from .nevdata import load_neural_data, divide_by_electrode_and_unit, build_df
+from .nevdata import load_neural_data, divide_by_electrode_and_unit, build_df, build_trigger_df
 from .mea import get_soft_index_from_mea_index
 from .io import build_video, remove_files
 from .utils import get_name_from_dataset
@@ -55,6 +55,35 @@ def generate_spike_raster(dataset_path, output_path, electrodes=None):
     plt.clf()
 
 
+def generate_accumulated_spike_raster_bars(dataset_path, output_path, repetitions=10, electrodes=None):
+    print('generate_accumulated_spike_raster')
+
+    # Load data
+    neural_data = load_neural_data(dataset_path)
+    data = divide_by_electrode_and_unit(neural_data)
+
+    # Plot each electrode spike raster
+    for idx, (key, value) in enumerate(data.items()):
+        if electrodes is None or key[0] in electrodes:
+            for i in range(8):
+                for j in range(repetitions):
+                    try:
+                        indexes = np.where((value >= neural_data.trigger[(i*repetitions) + j])
+                                           & (value < neural_data.trigger[(i*repetitions) + (j+1)]))
+                    except:
+                        indexes = np.where(value >= neural_data.trigger[i*repetitions+j])
+
+                    x = value[indexes] - (neural_data.trigger[(i*repetitions) + j] - neural_data.trigger[i*repetitions])
+                    y = np.ones(x.size) * (j + 1)
+                    plt.scatter(x, y, s=3, lw=0)
+
+            plt.xlabel('Time (ms)')
+            plt.ylabel('Iteration')
+            plt.title('Accumulated spike raster [' + str(key) + ']')
+            plt.savefig(output_path + 'acc-raster-' + str(key) + '-' + get_name_from_dataset(dataset_path) + '.pdf')
+            plt.cla()
+
+
 def save_spike_raster(dataset_path, output_path):
     print('save_spike_raster')
 
@@ -62,6 +91,15 @@ def save_spike_raster(dataset_path, output_path):
     neural_data = load_neural_data(dataset_path)
     data = build_df(neural_data)
     data.to_csv(output_path + 'data-spikes-' + get_name_from_dataset(dataset_path) + '.csv', index=False)
+
+
+def save_trigger(dataset_path, output_path):
+    print('save_trigger')
+
+    # Load data
+    neural_data = load_neural_data(dataset_path)
+    data = build_trigger_df(neural_data)
+    data.to_csv(output_path + 'data-trigger-' + get_name_from_dataset(dataset_path) + '.csv', index=False)
 
 
 def generate_video(dataset_path, output_path, fps=60, step_ms=17, mea_size=10, image_size=500):
